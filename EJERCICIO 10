@@ -1,0 +1,30 @@
+;Programa para sumar dos números y ejecutar una OR con dos números
+
+DATA1 EQU 0x20000000
+DATA2 EQU 0x20000004
+
+    AREA   |.text|, CODE,  READONLY,  ALIGN = 2
+	  ENTRY  
+	  EXPORT __main 
+
+__main
+     ;Se carga a R0 con la direccion de DATA1 y R1 con la dirección de DATA2
+     LDR   R0, =DATA1     ; R1 =0 x20000000
+	   LDR   R1, =DATA2     ; R2 =0 x20000004
+
+LOOP ; SEGUNDOS
+
+     ADD   R2, #1
+     STR   R2, [R0]
+	   CMP   R2, #60
+	   BEQ   MINUTOS	 
+	   B     LOOP
+
+MINUTOS 
+     
+	   MOV   R2, #0
+	   ADD   R3, #1
+	   BEQ   LOOP 
+	 
+	   ALIGN
+	   END
