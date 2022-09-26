@@ -1,0 +1,54 @@
+;Programa para sumar dos números y ejecutar una OR con dos números
+
+VAR1 EQU 0x20000000
+VAR2 EQU 0x20000004
+VAR3 EQU 0x20000008
+VAR4 EQU 0x2000000C
+VAR5 EQU 0x20000010
+
+
+     AREA   |.text|, CODE,  READONLY,  ALIGN = 2
+	 ENTRY  
+	 EXPORT __main 
+
+__main
+     ;Se carga la variable1 a R0 con la direccion de variable1, el B que acompaña especifíca de 8 bits y lo mismo aplica
+	 ;para las demás variables 
+     LDR   R1, =VAR1     ; R1 =0 x20000000
+	 LDR   R2, =VAR2     ; R2 =0 x20000004
+	 LDR   R3, =VAR3     ; R3 =0 x20000008
+	 LDR   R4, =VAR4     ; R4 =0 x2000000C
+	 LDR   R5, =VAR5     ; R3 =0 x20000010
+
+LOOP
+    ;Se le asigna el numero deseado a cada registro
+    MOV   R6, #4312
+    MOV   R7, #1231
+	  MOV   R8, #6524
+	  MOV   R9, #0
+	  MOV   R10, #0
+	  
+	  ;Se asignan los registros a otros para que no haya cambios 
+	  STR   R6, [R1] ;Guarda, R1 = R6, VAR1=R6
+	  STR   R7, [R2] ;Guarda, R2 = R7, VAR2=R7
+	  STR   R8, [R3] ;Guarda, R3 = R8, VAR3=R8
+	  STR   R9, [R4] ;Guarda, R4 = R9, VAR1=R9
+	  STR   R10, [R5] ;Guarda, R5 = R10, VAR2=R10
+
+	  
+	  ;Se realiza la SUMA deseada DE R6(R1)VAR1 Y R7(R2)VAR2 y lo guarda en R9
+	  ADD   R9, R6, R7
+	  
+	  ;Guarda el resultado de R9 a R4(VAR4)
+	  STR   R9, [R4]
+	  
+	  ;Se realiza la operación or entre R7(R2)VAR2 y R8(R3)VAR3 y lo guarda en R10
+	  ORR   R10, R7, R8
+	  
+	  ;Guarda el resultado de R10 a R5(VAR5)
+	  STR   R10, [R5]
+	  
+	  
+	  
+	  ALIGN
+	  END
